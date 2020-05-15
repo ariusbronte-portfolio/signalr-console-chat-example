@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SignalRChat.Server.Hubs;
 
 namespace SignalRChat.Server
 {
@@ -30,11 +31,13 @@ namespace SignalRChat.Server
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
+                    services.AddSignalR();
                 }).Configure(app =>
                 {
                     app.UseRouting();
                     app.UseEndpoints(endpoints =>
                     {
+                        endpoints.MapHub<ChatHub>("/chatHub");
                     });
                 });
     }
